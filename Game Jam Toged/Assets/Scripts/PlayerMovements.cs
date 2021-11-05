@@ -21,15 +21,31 @@ public class PlayerMovements : MonoBehaviour
         Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
         Vector3 horizontalMove = transform.right * sideSpeed * _horizontalInput * Time.fixedDeltaTime;
 
-
-        if (this.gameObject.transform.position.x > LevelBoundary.leftSide &&
-            this.gameObject.transform.position.x < LevelBoundary.rightSide)
+        // if the player is in boundary move normal
+        if (this.gameObject.transform.position.x >= LevelBoundary.leftSide &&
+            this.gameObject.transform.position.x <= LevelBoundary.rightSide)
         {
             rb.MovePosition(rb.position + forwardMove + horizontalMove);
         }
+        // if player not in boundary check three different state
         else
         {
-            rb.MovePosition(rb.position + forwardMove + -horizontalMove);
+            // check if player in left boundary and press right direction then allow to player move
+            if (this.gameObject.transform.position.x <= LevelBoundary.leftSide && _horizontalInput > 0)
+            {
+                rb.MovePosition(rb.position + forwardMove + horizontalMove);
+
+            }
+            // check if player in right boundary and press left direction then allow to player move
+            else if (this.gameObject.transform.position.x >= LevelBoundary.rightSide && _horizontalInput < 0)
+            {
+                rb.MovePosition(rb.position + forwardMove + horizontalMove);
+            }
+            // if neither one of them only allow to forward movement
+            else
+            {
+                rb.MovePosition(rb.position + forwardMove);
+            }
         }
     }
 
