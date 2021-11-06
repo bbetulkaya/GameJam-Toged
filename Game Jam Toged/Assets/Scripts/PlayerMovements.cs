@@ -43,7 +43,7 @@ public class PlayerMovements : MonoBehaviour
         {
 
             rb.MovePosition(rb.position + forwardMove + horizontalMove);
-            
+
 
         }
 
@@ -93,6 +93,21 @@ public class PlayerMovements : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Obstacle"))
+        {
+            if (collision.collider.name == "Small")
+            {
+                Debug.Log("small blood lost");
+            }
+            if (collision.collider.name == "Wide")
+            {
+                Debug.Log("more blood lost");
+            }
         }
     }
 }
