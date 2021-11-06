@@ -12,28 +12,25 @@ public class PlayerMovements : MonoBehaviour
     [Header("Player Movements")]
     [SerializeField] public float speed = 5f;
     [SerializeField] public float sideSpeed = 2f;
-    [SerializeField] public float jumpSpeed = 10f;
+    [SerializeField] public float jumpForce = 30f;
 
     private Rigidbody rb;
     private float _horizontalInput;
     private bool _jumpInput;
+    private float distToGround;
     private bool _isInBoundary;
     private bool _isPlayerCanMove;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        distToGround = GetComponent<CapsuleCollider>().bounds.extents.y;
     }
 
     private void FixedUpdate()
     {
         Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
         Vector3 horizontalMove = transform.right * sideSpeed * _horizontalInput * Time.fixedDeltaTime;
-
-        if (_jumpInput)
-        {
-            rb.velocity = transform.up * jumpSpeed;
-        }
 
         // if the player is in boundary move normal
         if (_isInBoundary)
@@ -61,12 +58,21 @@ public class PlayerMovements : MonoBehaviour
     void Update()
     {
         _horizontalInput = Input.GetAxis("Horizontal");
-        _jumpInput = Input.GetKeyDown(KeyCode.Space);
+
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+        {
+            Debug.Log("JUMP");
+            Jump();
+        }
 
         _isInBoundary = IsPlayerInBoundary();
         _isPlayerCanMove = IsPlayerAllowedToMove();
     }
 
+    void Jump()
+    {
+        rb.AddForce(Vector3.up * jumpForce);
+    }
     bool IsPlayerInBoundary()
     {
         if (this.gameObject.transform.position.x >= LevelBoundary.leftSide &&
@@ -132,4 +138,9 @@ public class PlayerMovements : MonoBehaviour
             StartCoroutine(PlayerBloodLostXTime(totalTicks, damageValue));
         }
     }
+    bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+    }
+
 }
