@@ -630,6 +630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageValue: 3
+  damageImpact: 1.25
   obstacleName: 
 --- !u!1 &1567129447
 GameObject:
@@ -741,11 +742,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c9603c68231b0e4096b264f6d810ec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  blood: 1000
+  bloodLostSpeed: 1
+  isPlayerBleeding: 0
   speed: 5
   sideSpeed: 5
   jumpSpeed: 5
-  horizantalMultiplier: 2
 --- !u!54 &1567129453
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -775,8 +777,8 @@ GameObject:
   - component: {fileID: 2018037121}
   - component: {fileID: 2018037120}
   m_Layer: 0
-  m_Name: Sphere
-  m_TagString: Untagged
+  m_Name: Medicine
+  m_TagString: Medicine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -813,7 +815,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5d04871734a1140488104cb2d73ee332, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -966,6 +968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageValue: 2
+  damageImpact: 0.5
   obstacleName: 
 --- !u!1 &2065000267
 GameObject:
@@ -1076,4 +1079,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageValue: 3
+  damageImpact: 1.25
   obstacleName: 

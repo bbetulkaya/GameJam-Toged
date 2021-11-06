@@ -13,7 +13,6 @@ public class PlayerMovements : MonoBehaviour
     [SerializeField] public float speed = 5f;
     [SerializeField] public float sideSpeed = 2f;
     [SerializeField] public float jumpSpeed = 10f;
-    [SerializeField] public float horizantalMultiplier = 2f;
 
     private Rigidbody rb;
     private float _horizontalInput;
@@ -34,8 +33,6 @@ public class PlayerMovements : MonoBehaviour
         if (_jumpInput)
         {
             rb.velocity = transform.up * jumpSpeed;
-            //Apply a force to this Rigidbody in direction of this GameObjects up axis
-            // rb.AddForce(transform.up * jumpSpeed, ForceMode.Impulse);
         }
 
         // if the player is in boundary move normal
@@ -106,15 +103,33 @@ public class PlayerMovements : MonoBehaviour
     {
         if (collision.collider.CompareTag("Obstacle"))
         {
-
             var obstacle = collision.collider.GetComponent<Obstacle>();
-
-            Debug.Log("Damage =" + obstacle.damageValue + " ml blood");
+            isPlayerBleeding = true;
+            CalculateBloodLostSpeed(obstacle.damageImpact);
+            StartCoroutine(PlayerBloodLostXTime(bloodLostSpeed, obstacle.damageValue));
         }
         if (collision.collider.CompareTag("Medicine"))
         {
             Destroy(collision.gameObject);
+            isPlayerBleeding = false;
+            bloodLostSpeed = 1;
             Debug.Log("Player took the medicine");
+        }
+    }
+
+    private void CalculateBloodLostSpeed(float damage)
+    {
+        bloodLostSpeed = bloodLostSpeed + damage;
+    }
+
+    IEnumerator PlayerBloodLostXTime(float totalTicks, float damageValue)
+    {
+        blood -= damageValue * bloodLostSpeed;
+        yield return new WaitForSeconds(2);
+
+        if (isPlayerBleeding)
+        {
+            StartCoroutine(PlayerBloodLostXTime(totalTicks, damageValue));
         }
     }
 }
