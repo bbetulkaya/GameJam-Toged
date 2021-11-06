@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PlayerMovements : MonoBehaviour
 {
+    [Header("Player Health")]
+    [SerializeField] public float blood = 100f;
+    [SerializeField] public float bloodLostSpeed = 1f;
+    [SerializeField] public bool isPlayerBleeding = false;
+
+    [Header("Player Movements")]
     [SerializeField] public float speed = 5f;
     [SerializeField] public float sideSpeed = 2f;
     [SerializeField] public float jumpSpeed = 10f;
@@ -100,14 +106,15 @@ public class PlayerMovements : MonoBehaviour
     {
         if (collision.collider.CompareTag("Obstacle"))
         {
-            if (collision.collider.name == "Small")
-            {
-                Debug.Log("small blood lost");
-            }
-            if (collision.collider.name == "Wide")
-            {
-                Debug.Log("more blood lost");
-            }
+
+            var obstacle = collision.collider.GetComponent<Obstacle>();
+
+            Debug.Log("Damage =" + obstacle.damageValue + " ml blood");
+        }
+        if (collision.collider.CompareTag("Medicine"))
+        {
+            Destroy(collision.gameObject);
+            Debug.Log("Player took the medicine");
         }
     }
 }
