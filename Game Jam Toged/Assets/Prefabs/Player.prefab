@@ -1320,9 +1320,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7644855942861619032}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: -40}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 3528661029448423578}
   m_Father: {fileID: 0}
@@ -1355,8 +1355,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 7.282466, y: 8.198779, z: 3.7401505}
-  m_Center: {x: -0.03383398, y: 4.1078725, z: -0.18362045}
+  m_Size: {x: 5.570378, y: 8.198779, z: 3.3732755}
+  m_Center: {x: -0.016364057, y: 4.1078725, z: -0.3670577}
 --- !u!114 &7410270939020148588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1374,7 +1374,7 @@ MonoBehaviour:
   isPlayerBleeding: 0
   speed: 5
   sideSpeed: 5
-  jumpForce: 400
+  jumpForce: 3
 --- !u!1 &7879876185533182061
 GameObject:
   m_ObjectHideFlags: 0
