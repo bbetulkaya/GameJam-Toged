@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerMovements : MonoBehaviour
 {
     [Header("Player Health")]
-    [SerializeField] public float blood = 100f;
+    [SerializeField] public float maxBlood = 1000f;
+    [SerializeField] public float currentBlood;
+
     [SerializeField] public float bloodLostSpeed = 1f;
     [SerializeField] public bool isPlayerBleeding = false;
 
@@ -25,6 +27,7 @@ public class PlayerMovements : MonoBehaviour
 
     void Start()
     {
+        currentBlood = maxBlood;
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         distToGround = GetComponent<BoxCollider>().bounds.extents.y;
@@ -117,7 +120,15 @@ public class PlayerMovements : MonoBehaviour
         if (collision.collider.CompareTag("Medicine"))
         {
             var obstacle = collision.collider.GetComponent<Obstacle>();
-            blood += obstacle.damageValue;
+            if (maxBlood < currentBlood + obstacle.damageValue)
+            {
+                currentBlood = maxBlood;
+            }
+            else
+            {
+                currentBlood += obstacle.damageValue; ;
+            }
+
 
             Destroy(collision.gameObject);
 
@@ -136,7 +147,11 @@ public class PlayerMovements : MonoBehaviour
     IEnumerator PlayerBloodLostXTime(float totalTicks, float damageValue)
     {
         // blood -= damageValue * bloodLostSpeed;
-        blood -= damageValue * bloodLostSpeed;
+        currentBlood -= damageValue * bloodLostSpeed;
+        if (currentBlood <= 0)
+        {
+            GameManager.Instance.GameOver();
+        }
         yield return new WaitForSeconds(2);
 
         if (isPlayerBleeding)

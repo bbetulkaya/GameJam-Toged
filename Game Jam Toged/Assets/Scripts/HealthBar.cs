@@ -12,14 +12,13 @@ public class HealthBar : MonoBehaviour
 
     void Start()
     {
-        healthBar = GetComponent<Image>();
         player = FindObjectOfType<PlayerMovements>();
-        maxBlood = player.blood;
+        maxBlood = player.maxBlood;
     }
 
     void Update()
     {
-        currentBlood = player.blood;
+        currentBlood = player.currentBlood;
         healthBar.fillAmount = currentBlood / maxBlood;
     }
 }
