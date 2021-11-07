@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,8 +26,16 @@ public class GameManager : MonoBehaviour
     }
 
     // Add your game mananger members here
-    public void Pause(bool paused)
+    public void Restart()
     {
+        Time.timeScale = 1;
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void Exit()
+    {
+        Time.timeScale = 0;
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void GameOver()

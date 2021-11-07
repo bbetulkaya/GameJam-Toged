@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class GameOverScreen : MonoBehaviour
 {
     public Text scoreText;
@@ -15,14 +16,5 @@ public class GameOverScreen : MonoBehaviour
         Time.timeScale = 0;
         panel.SetActive(true);
         scoreText.text = "SCORE: " + ((int)score).ToString();
-    }
-
-    public void RestartButton()
-    {
-
-    }
-    public void ExitButton()
-    {
-
     }
 }
