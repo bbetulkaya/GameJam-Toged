@@ -17,6 +17,7 @@ public class PlayerMovements : MonoBehaviour
     private Rigidbody rb;
     private Animator animator;
     private float _horizontalInput;
+    private Vector3 _horizontalMove;
     private bool _jumpInput;
     private float distToGround;
     private bool _isInBoundary;
@@ -32,21 +33,18 @@ public class PlayerMovements : MonoBehaviour
     private void FixedUpdate()
     {
         // Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
-        Vector3 horizontalMove = transform.right * sideSpeed * _horizontalInput * Time.fixedDeltaTime;
-
+        _horizontalMove = transform.right * sideSpeed * _horizontalInput * Time.fixedDeltaTime;
+        
         // if the player is in boundary move normal
         if (_isInBoundary)
         {
-            rb.MovePosition(rb.position + horizontalMove);
+            rb.MovePosition(rb.position + _horizontalMove);
         }
 
         // Check player is allowed to move again if it is then move
         else if (_isPlayerCanMove)
         {
-
-            rb.MovePosition(rb.position + horizontalMove);
-
-
+            rb.MovePosition(rb.position + _horizontalMove);
         }
 
         // if neither one of them only allow to only forward movement
@@ -56,24 +54,21 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
-
     void Update()
     {
         _horizontalInput = Input.GetAxis("Horizontal");
-
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("JUMP");
             Jump();
         }
-
         _isInBoundary = IsPlayerInBoundary();
         _isPlayerCanMove = IsPlayerAllowedToMove();
     }
 
     void Jump()
     {
-        rb.AddForce(Vector3.up * jumpForce);
+        // transform.Translate(_horizontalMove + new Vector3(0, jumpForce, 0));
+        rb.MovePosition(rb.position + _horizontalMove + new Vector3(0, jumpForce, 0));
     }
     bool IsPlayerInBoundary()
     {
@@ -112,16 +107,20 @@ public class PlayerMovements : MonoBehaviour
         if (collision.collider.CompareTag("Obstacle"))
         {
             var obstacle = collision.collider.GetComponent<Obstacle>();
+
             isPlayerBleeding = true;
             animator.SetBool("isBleeding", isPlayerBleeding);
+
             CalculateBloodLostSpeed(obstacle.damageImpact);
             StartCoroutine(PlayerBloodLostXTime(bloodLostSpeed, obstacle.damageValue));
         }
         if (collision.collider.CompareTag("Medicine"))
         {
             Destroy(collision.gameObject);
+
             isPlayerBleeding = false;
             animator.SetBool("isBleeding", isPlayerBleeding);
+
             bloodLostSpeed = 1;
             Debug.Log("Player took the medicine");
         }

@@ -44,18 +44,22 @@ public class SpawnObstacles : MonoBehaviour
 
             float posX = CalculateXPos();
             tmpSpawnZPos += distanceZ;
-            Vector3 spawnPos = new Vector3(posX, 1, tmpSpawnZPos);
 
             if (medicineChance == 0)
             {
                 spawnedObject.Add(medicine);
-                Instantiate(medicine, spawnPos, Quaternion.identity);
+                Vector3 spawnPos = new Vector3(posX, medicine.transform.position.y, tmpSpawnZPos);
+
+                Instantiate(medicine, spawnPos, medicine.transform.rotation);
             }
             else
             {
                 int rand = Random.Range(0, obstacles.Length);
+
                 spawnedObject.Add(obstacles[rand]);
-                Instantiate(obstacles[rand], spawnPos, Quaternion.identity);
+                Vector3 spawnPos = new Vector3(posX, obstacles[rand].transform.position.y, tmpSpawnZPos);
+
+                Instantiate(obstacles[rand], spawnPos, obstacles[rand].transform.rotation);
             }
         }
 
@@ -73,6 +77,5 @@ public class SpawnObstacles : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         SpawnObject(8, spawnZ);
-        // Start function WaitAndPrint as a coroutine
     }
 }
