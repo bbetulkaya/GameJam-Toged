@@ -18,6 +18,7 @@ public class PlayerMovements : MonoBehaviour
 
     private Rigidbody rb;
     private Animator animator;
+    public ParticleController particleController;
     private float _horizontalInput;
     private Vector3 _horizontalMove;
     private bool _jumpInput;
@@ -119,6 +120,7 @@ public class PlayerMovements : MonoBehaviour
         }
         if (collision.collider.CompareTag("Medicine"))
         {
+            particleController.StopBloodParticle();
             var obstacle = collision.collider.GetComponent<Obstacle>();
             if (maxBlood < currentBlood + obstacle.damageValue)
             {
@@ -147,9 +149,11 @@ public class PlayerMovements : MonoBehaviour
     IEnumerator PlayerBloodLostXTime(float totalTicks, float damageValue)
     {
         // blood -= damageValue * bloodLostSpeed;
+        // particleController.BloodParticle();
         currentBlood -= damageValue * bloodLostSpeed;
         if (currentBlood <= 0)
         {
+            particleController.StopBloodParticle();
             GameManager.Instance.GameOver();
         }
         yield return new WaitForSeconds(2);
