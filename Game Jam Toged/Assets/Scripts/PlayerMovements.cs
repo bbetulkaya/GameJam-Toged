@@ -29,20 +29,20 @@ public class PlayerMovements : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
+        // Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
         Vector3 horizontalMove = transform.right * sideSpeed * _horizontalInput * Time.fixedDeltaTime;
 
         // if the player is in boundary move normal
         if (_isInBoundary)
         {
-            rb.MovePosition(rb.position + forwardMove + horizontalMove);
+            rb.MovePosition(rb.position+ horizontalMove);
         }
 
         // Check player is allowed to move again if it is then move
         else if (_isPlayerCanMove)
         {
 
-            rb.MovePosition(rb.position + forwardMove + horizontalMove);
+            rb.MovePosition(rb.position + horizontalMove);
 
 
         }
@@ -50,7 +50,7 @@ public class PlayerMovements : MonoBehaviour
         // if neither one of them only allow to only forward movement
         else
         {
-            rb.MovePosition(rb.position + forwardMove);
+            rb.MovePosition(rb.position);
         }
     }
 
