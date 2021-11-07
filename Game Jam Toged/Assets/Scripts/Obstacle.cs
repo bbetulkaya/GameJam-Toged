@@ -22,7 +22,7 @@ public class Obstacle : MonoBehaviour
     void Update()
     {
         // Obstacle life time
-        if (transform.position.z < -50f)
+        if (transform.position.z < -55f)
         {
             Destroy(this.gameObject);
         }
