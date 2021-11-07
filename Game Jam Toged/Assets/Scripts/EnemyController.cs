@@ -9,6 +9,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] public Vector3 offset;
     public PlayerMovements player;
     public CameraMovements cameraMovements;
+    public AudioManager audioManager;
+
     void Start()
     {
         enemyAnim = GetComponent<Animator>();
@@ -19,7 +21,7 @@ public class EnemyController : MonoBehaviour
     {
         if (player.isPlayerBleeding)
         {
-
+            // audioManager.VampireClip();
             enemyAnim.SetBool("isVampireRunning", true);
             cameraMovements.offset.z = -10f;
 

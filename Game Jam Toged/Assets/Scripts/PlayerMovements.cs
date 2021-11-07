@@ -19,6 +19,7 @@ public class PlayerMovements : MonoBehaviour
     private Rigidbody rb;
     private Animator animator;
     public ParticleController particleController;
+    public AudioManager audioManager;
     private float _horizontalInput;
     private Vector3 _horizontalMove;
     private bool _jumpInput;
@@ -72,6 +73,7 @@ public class PlayerMovements : MonoBehaviour
     void Jump()
     {
         // transform.Translate(_horizontalMove + new Vector3(0, jumpForce, 0));
+        audioManager.JumpAudio();
         rb.MovePosition(rb.position + _horizontalMove + new Vector3(0, jumpForce, 0));
     }
     bool IsPlayerInBoundary()
@@ -111,7 +113,7 @@ public class PlayerMovements : MonoBehaviour
         if (collision.collider.CompareTag("Obstacle"))
         {
             var obstacle = collision.collider.GetComponent<Obstacle>();
-
+            audioManager.ObstacleAudio();
             isPlayerBleeding = true;
             animator.SetBool("isBleeding", isPlayerBleeding);
 
@@ -121,6 +123,8 @@ public class PlayerMovements : MonoBehaviour
         if (collision.collider.CompareTag("Medicine"))
         {
             particleController.StopBloodParticle();
+            audioManager.MedicineAudio();
+            
             var obstacle = collision.collider.GetComponent<Obstacle>();
             if (maxBlood < currentBlood + obstacle.damageValue)
             {
