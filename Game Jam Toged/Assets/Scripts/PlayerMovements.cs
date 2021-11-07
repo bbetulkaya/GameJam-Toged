@@ -34,7 +34,7 @@ public class PlayerMovements : MonoBehaviour
     {
         // Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
         _horizontalMove = transform.right * sideSpeed * _horizontalInput * Time.fixedDeltaTime;
-        
+
         // if the player is in boundary move normal
         if (_isInBoundary)
         {
@@ -116,11 +116,13 @@ public class PlayerMovements : MonoBehaviour
         }
         if (collision.collider.CompareTag("Medicine"))
         {
+            var obstacle = collision.collider.GetComponent<Obstacle>();
+            blood += obstacle.damageValue;
+
             Destroy(collision.gameObject);
 
             isPlayerBleeding = false;
             animator.SetBool("isBleeding", isPlayerBleeding);
-
             bloodLostSpeed = 1;
             Debug.Log("Player took the medicine");
         }
@@ -133,6 +135,7 @@ public class PlayerMovements : MonoBehaviour
 
     IEnumerator PlayerBloodLostXTime(float totalTicks, float damageValue)
     {
+        // blood -= damageValue * bloodLostSpeed;
         blood -= damageValue * bloodLostSpeed;
         yield return new WaitForSeconds(2);
 

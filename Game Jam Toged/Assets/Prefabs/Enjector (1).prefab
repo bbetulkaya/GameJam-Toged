@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eafd2c3a037030a43b4ab926cbf69b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageValue: 0
+  damageValue: 20
   damageImpact: 0
   obstacleName: 
   speed: 10
