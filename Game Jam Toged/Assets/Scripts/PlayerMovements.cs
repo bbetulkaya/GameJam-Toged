@@ -15,6 +15,7 @@ public class PlayerMovements : MonoBehaviour
     [SerializeField] public float jumpForce = 30f;
 
     private Rigidbody rb;
+    private Animator animator;
     private float _horizontalInput;
     private bool _jumpInput;
     private float distToGround;
@@ -24,7 +25,8 @@ public class PlayerMovements : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        distToGround = GetComponent<CapsuleCollider>().bounds.extents.y;
+        animator = GetComponentInChildren<Animator>();
+        distToGround = GetComponent<BoxCollider>().bounds.extents.y;
     }
 
     private void FixedUpdate()
@@ -35,7 +37,7 @@ public class PlayerMovements : MonoBehaviour
         // if the player is in boundary move normal
         if (_isInBoundary)
         {
-            rb.MovePosition(rb.position+ horizontalMove);
+            rb.MovePosition(rb.position + horizontalMove);
         }
 
         // Check player is allowed to move again if it is then move
@@ -111,6 +113,7 @@ public class PlayerMovements : MonoBehaviour
         {
             var obstacle = collision.collider.GetComponent<Obstacle>();
             isPlayerBleeding = true;
+            animator.SetBool("isBleeding", isPlayerBleeding);
             CalculateBloodLostSpeed(obstacle.damageImpact);
             StartCoroutine(PlayerBloodLostXTime(bloodLostSpeed, obstacle.damageValue));
         }
@@ -118,6 +121,7 @@ public class PlayerMovements : MonoBehaviour
         {
             Destroy(collision.gameObject);
             isPlayerBleeding = false;
+            animator.SetBool("isBleeding", isPlayerBleeding);
             bloodLostSpeed = 1;
             Debug.Log("Player took the medicine");
         }

@@ -31,8 +31,7 @@ public class SpawnObstacles : MonoBehaviour
         xPositions[1] = midX;
         xPositions[2] = rightX;
 
-        SpawnObject(5, spawnMinZ);
-        // spawned 12 obstacles in between -10 and 40 z axis
+        SpawnObject(10, spawnMinZ);
     }
 
     void SpawnObject(float spawnNumber, float spawnZPos)
@@ -41,13 +40,13 @@ public class SpawnObstacles : MonoBehaviour
 
         for (int i = 0; i < spawnNumber; i++)
         {
-            int medicineChance = Random.Range(-2, 2);
+            int medicineChance = Random.Range(-5, 1);
 
             float posX = CalculateXPos();
             tmpSpawnZPos += distanceZ;
             Vector3 spawnPos = new Vector3(posX, 1, tmpSpawnZPos);
 
-            if (false)
+            if (medicineChance == 0)
             {
                 spawnedObject.Add(medicine);
                 Instantiate(medicine, spawnPos, Quaternion.identity);
@@ -65,15 +64,15 @@ public class SpawnObstacles : MonoBehaviour
 
     private float CalculateXPos()
     {
-        
-        int randXPos = Random.Range(0,xPositions.Length);
+
+        int randXPos = Random.Range(0, xPositions.Length);
         return xPositions[randXPos];
     }
 
     IEnumerator SpawnObjectTimer()
     {
         yield return new WaitForSeconds(5);
-        SpawnObject(5, spawnZ);
+        SpawnObject(8, spawnZ);
         // Start function WaitAndPrint as a coroutine
     }
 }

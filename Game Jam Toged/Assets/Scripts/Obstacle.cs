@@ -9,18 +9,14 @@ public class Obstacle : MonoBehaviour
     public float damageImpact;
     public string obstacleName;
     public float speed = 5f;
-
-    public Rigidbody rb;
     void Start()
     {
         obstacleName = this.gameObject.name;
-        rb = GetComponent<Rigidbody>();
     }
     void FixedUpdate()
     {
         Vector3 forwardMove = -transform.forward * speed * Time.fixedDeltaTime;
-        // transform.Translate(forwardMove, Space.World);
-        rb.MovePosition(rb.position + forwardMove);
+        transform.Translate(forwardMove);
     }
 
     void Update()
